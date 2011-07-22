@@ -4,7 +4,7 @@
 package ServerControl::Extension::Redirector::Iptables;
 
 # servercontrol --create --port-http=10080 --port-https=10443
-# servercontrol-cluster-iptables --member=/i01 --member=/i02 --member=/i03 --redirect-http=80 --redirect-https=443
+# servercontrol-redirector-iptables --member=/i01 --member=/i02 --member=/i03 --redirect-http=80 --redirect-https=443
 
 use strict;
 use warnings;

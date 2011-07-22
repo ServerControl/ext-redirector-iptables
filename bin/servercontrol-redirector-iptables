@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+
+# vim: set ts=3 sw=3 tw=0:
+# vim: set expandtab:
+
+use strict;
+use warnings;
+
+my %opts;
+
+my @members;
+my @options;
+for my $arg (@ARGV) {
+   my ($key, $val) = split(/=/, $arg);
+   if($key eq "--member") {
+      push(@members, $val);
+   }
+   else {
+      $key =~ s/^\-\-//;
+      push(@options, $key . "=" . $val);
+   }
+}
+
+for my $m (@members) {
+   my @content = grep { ! /^\@member/ } eval { local(@ARGV) = ("$m/.instance.conf"); <>; };
+   chomp @content;
+   push(@content, "\@member=" . join(",", @members));
+
+   open(my $fh, ">$m/.instance.conf") or die($!);
+   print $fh join("\n", @content) . "\n";
+   close($fh);
+}
+
