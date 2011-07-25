@@ -9,7 +9,7 @@ package ServerControl::Extension::Redirector::Iptables;
 use strict;
 use warnings;
 
-our $VERSION = '0.2.0';
+our $VERSION = '0.3.0';
 
 use ServerControl::Extension;
 use Net::Interface;
@@ -24,17 +24,17 @@ __PACKAGE__->register('before_stop',   sub { shift->before_stop(@_); });
 sub after_start {
    my ($class, $sc) = @_;
 
-   print "Setting iptables rules\n";
    my $args = ServerControl::Args->get;
 
    # only set/remove rules when active
    if($args->{"active"}) {
+      print "Setting iptables rules\n";
       _set_rules();
 
       # remove old rules
       my @members = @{ $args->{"member"} };
       for my $member (@members) {
-         next if($member eq $args->{"instance_path"});
+         next if($member eq $args->{"path"});
          chdir($member);
          system("./control --run-hook=before_stop");
       }
