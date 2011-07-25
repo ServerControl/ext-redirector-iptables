@@ -1,0 +1,5 @@
+servercontrol-extension-redirector-iptables (0.1.0) unstable; urgency=low
+  * inital version
+
+ -- Jan Gehring <jan.gehring@gmail.com>  Fri, 22 Jul 2011 10:30:00 +0200
+
