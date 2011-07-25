@@ -1,4 +1,3 @@
 bin/servercontrol-redirector-iptables
-lib/ServerControl/Extension/Iptables.pm
 lib/ServerControl/Extension/Redirector/Iptables.pm
 Makefile.PL

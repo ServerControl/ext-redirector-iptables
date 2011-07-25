@@ -1,4 +1,4 @@
-servercontrol-extension-redirector-iptables (0.2.0) unstable; urgency=low
+servercontrol-extension-redirector-iptables (0.3.0) unstable; urgency=low
   * fixed naming bug
 
  -- Jan Gehring <jan.gehring@gmail.com>  Fri, 22 Jul 2011 10:30:00 +0200
