@@ -9,7 +9,7 @@ package ServerControl::Extension::Redirector::Iptables;
 use strict;
 use warnings;
 
-our $VERSION = '0.3.0';
+our $VERSION = '0.4.0';
 
 use ServerControl::Extension;
 use Net::Interface;
@@ -27,7 +27,7 @@ sub after_start {
    my $args = ServerControl::Args->get;
 
    # only set/remove rules when active
-   if($args->{"active"}) {
+   if(-f $args->{"path"} . "/.active") {
       print "Setting iptables rules\n";
       _set_rules();
 
