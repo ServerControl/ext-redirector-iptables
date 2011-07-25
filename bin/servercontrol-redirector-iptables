@@ -5,11 +5,8 @@
 
 use strict;
 use warnings;
+use Data::Dumper;
 
-unless(/\-\-member/ ~~ @ARGV) {
-   print "Please specify at least 1 --member\n";
-   exit 1;
-}
 
 
 my @members;
@@ -24,6 +21,40 @@ for my $arg (@ARGV) {
       push(@options, $key . "=" . $val);
    }
 }
+
+if(/\-\-set-active=([^\s]+)/ ~~ @ARGV) {
+   my $i_path = $1;
+   my @content = eval { local(@ARGV) = ("$i_path/.instance.conf"); <>; };
+   chomp @content;
+   @members = split(/,/, [ grep { $_=$1 if /^\@member=(.*)$/ } @content ]->[0]);
+   my ($me) = [ grep { $_=$1 if /^path=(.*)$/ } @content ]->[0];
+
+   for my $member (@members) {
+      my @member_content = grep { ! /^active=/ } eval { local(@ARGV) = ("$member/.instance.conf"); <>; };
+      chomp @member_content;
+      push(@member_content, "active=0");
+
+      open(my $fh, ">$member/.instance.conf") or die($!);
+      print $fh join("\n", @member_content) . "\n";
+      close($fh);
+   }
+
+   @content = grep { ! /^active=/ } eval { local(@ARGV) = ("$i_path/.instance.conf"); <>; };
+   chomp @content;
+   push(@content, "active=1");
+
+   open(my $fh, ">$i_path/.instance.conf") or die($!);
+   print $fh join("\n", @content) . "\n";
+   close($fh);
+
+   exit 0;
+}
+
+unless(/\-\-member/ ~~ @ARGV) {
+   print "Please specify at least 1 --member\n";
+   exit 1;
+}
+
 
 for my $m (@members) {
    my @content = grep { ! /^\@member/ } eval { local(@ARGV) = ("$m/.instance.conf"); <>; };

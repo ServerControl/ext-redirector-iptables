@@ -25,15 +25,20 @@ sub after_start {
    my ($class, $sc) = @_;
 
    print "Setting iptables rules\n";
-   _set_rules();
-
-   # remove old rules
    my $args = ServerControl::Args->get;
-   my @members = @{ $args->{"member"} };
-   for my $member (@members) {
-      next if($member eq $args->{"instance_path"});
-      chdir($member);
-      system("./control --run-hook=before_stop");
+
+   # only set/remove rules when active
+   if($args->{"active"}) {
+      _set_rules();
+
+      # remove old rules
+      my @members = @{ $args->{"member"} };
+      for my $member (@members) {
+         next if($member eq $args->{"instance_path"});
+         chdir($member);
+         system("./control --run-hook=before_stop");
+      }
+
    }
 }
 
