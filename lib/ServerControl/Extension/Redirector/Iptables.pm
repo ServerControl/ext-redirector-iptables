@@ -9,7 +9,7 @@ package ServerControl::Extension::Redirector::Iptables;
 use strict;
 use warnings;
 
-our $VERSION = '0.4.0';
+our $VERSION = '0.5.0';
 
 use ServerControl::Extension;
 use Net::Interface;

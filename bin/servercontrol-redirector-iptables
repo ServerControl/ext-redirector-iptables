@@ -37,6 +37,9 @@ if(/\-\-set-active=([^\s]+)/ ~~ @ARGV) {
    print $fh "This instance is active\n";
    close($fh);
 
+   chdir($i_path);
+   system("./control --run-hook=after_start");
+
    exit 0;
 }
 
