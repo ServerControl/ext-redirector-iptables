@@ -6,7 +6,11 @@
 use strict;
 use warnings;
 
-my %opts;
+unless(/\-\-member/ ~~ @ARGV) {
+   print "Please specify at least 1 --member\n";
+   exit 1;
+}
+
 
 my @members;
 my @options;
@@ -29,5 +33,17 @@ for my $m (@members) {
    open(my $fh, ">$m/.instance.conf") or die($!);
    print $fh join("\n", @content) . "\n";
    close($fh);
+
+   for my $option (@options) {
+      my @content = grep { ! /^$option/ } eval { local(@ARGV) = ("$m/.instance.conf"); <>; };
+      chomp @content;
+      push(@content, $option);
+
+      open(my $fh, ">$m/.instance.conf") or die($!);
+      print $fh join("\n", @content) . "\n";
+      close($fh);
+   }
+
 }
+
 
