@@ -9,7 +9,7 @@ package ServerControl::Extension::Redirector::Iptables;
 use strict;
 use warnings;
 
-our $VERSION = '0.5.0';
+our $VERSION = '0.6.0';
 
 use ServerControl::Extension;
 use Net::Interface;
@@ -30,6 +30,10 @@ sub after_start {
    if(-f $args->{"path"} . "/.active") {
       print "Setting iptables rules\n";
       _set_rules();
+
+      if(! ref($args->{"member"})) {
+         return;
+      }
 
       # remove old rules
       my @members = @{ $args->{"member"} };
