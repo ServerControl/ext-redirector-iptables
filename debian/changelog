@@ -1,4 +1,9 @@
 servercontrol-extension-redirector-iptables (0.6.0) unstable; urgency=low
+  * feature freeze
+
+ -- Jan Gehring <jan.gehring@gmail.com>  Sat, 21 Jul 2012 12:30:00 +0200
+
+servercontrol-extension-redirector-iptables (0.6.0) unstable; urgency=low
   * run after_start hook after --set-active
 
  -- Jan Gehring <jan.gehring@gmail.com>  Fri, 22 Jul 2011 10:30:00 +0200
